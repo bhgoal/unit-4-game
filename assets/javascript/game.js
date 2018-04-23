@@ -144,7 +144,11 @@ function attack() {
                 attackMode = false;
                 console.log("Enemy defeated");
                 $("#rightSubCol1").html("");
-                selectEnemy();
+                if (charactersRemain.length === 0) {
+                    console.log("You win!");
+                } else {
+                    selectEnemy();
+                }
             }
             console.log(attackMode);
         } else {
