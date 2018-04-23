@@ -49,15 +49,14 @@ var praporCharacter = {
 var characterChoice = "";
 
 var showCard = {
-    scav: '<div class="card" id="scav" style="width: 18rem;"><img class="card-img-top" src="assets/images/scav.png" alt="Scav image cap"><div class="card-body"><h5 class="card-title">Scav</h5><p class="card-text">Some quick placeholder text for the scav character.</p><a href="#" class="btn btn-primary">Go somewhere</a></div></div>',
-
-    bear:'<div class="card" id="bear" style="width: 18rem;"><img class="card-img-top" src="assets/images/bear.png" alt="Bear image cap"><div class="card-body"><h5 class="card-title">Bear</h5><p class="card-text">Some quick placeholder text for the bear character.</p><a href="#" class="btn btn-primary">Go somewhere</a></div></div>',
+    scav: '<div class="card" id="scav" style="width: 18rem;"><img class="card-img-top" src="assets/images/scav.png" alt="Scav image cap"><div class="card-body"><h5 class="card-title">Scav</h5><p class="card-text">Some quick placeholder text for the scav character.</p></div></div>',
+    bear: '<div class="card" id="bear" style="width: 18rem;"><img class="card-img-top" src="assets/images/bear.png" alt="Bear image cap"><div class="card-body"><h5 class="card-title">Bear</h5><p class="card-text">Some quick placeholder text for the bear character.</p></div></div>',
+    usec: '<div class="card" id="usec" style="width: 18rem;"><img class="card-img-top" src="assets/images/usec.png" alt="Usec image cap"><div class="card-body"><h5 class="card-title">Usec</h5><p class="card-text">Some quick placeholder text for the Usec character.</p></div></div>',
+    prapor: '<div class="card" id="prapor" style="width: 18rem;"><img class="card-img-top" src="assets/images/prapor.png" alt="Prapor image cap"><div class="card-body"><h5 class="card-title">Prapor</h5><p class="card-text">Some quick placeholder text for the Prapor character.</p></div></div>',
 };
 
-
-
-//var charactersRemain = ["scav", "bear", "usec", "prapor"];
-//console.log(charactersRemain);
+var charactersRemain = ["scav", "bear", "usec", "prapor"];
+console.log(charactersRemain);
 
 $(".card").on("click", function() {
     console.log("character clicked");
@@ -65,7 +64,12 @@ $(".card").on("click", function() {
     console.log(characterChoice);
     charactersRemain.splice($.inArray(characterChoice, charactersRemain),1);
     console.log(charactersRemain);
-    $("#leftSubCol2").html(showCard.characterChoice);
+    $("#leftSubCol1").html(showCard[characterChoice]);
+    $("#leftSubCol2").html("");
+    $("#rightSubCol1").html("");
+    $("#rightSubCol2").html("");
+    for (i = 0; i < charactersRemain.length; i++) {
+        $("#rightSubCol2").append(showCard[charactersRemain[i]]);
+    }
 });
 
-console.log(showCard.characterChoice);
