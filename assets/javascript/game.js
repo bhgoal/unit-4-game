@@ -110,8 +110,8 @@ function selectEnemy() {
             activeEnemy = $(this).attr("id");
             console.log("enemy clicked");
             console.log(stats[activeEnemy]);
-        for(var k in stats.bear) {enemyChar[k]=stats[activeEnemy][k];}
-        console.log(enemyChar);
+            for(var k in stats.bear) {enemyChar[k]=stats[activeEnemy][k];}
+            console.log(enemyChar);
             charactersRemain.splice($.inArray(activeEnemy, charactersRemain),1);
             console.log(charactersRemain);
             // Move chosen character to left, others to right
@@ -120,20 +120,35 @@ function selectEnemy() {
             for (i = 0; i < charactersRemain.length; i++) {
                 $("#rightSubCol2").append(showCard[charactersRemain[i]]);
             }
+            attackMode = true;
+            attack();
         }
-        attack();
     });
 }
 
 function attack() {
     $("#attackButton").on("click", function() {
-        console.log("button clicked");
-        playerChar.health = playerChar.health - enemyChar.attackPower;
-        enemyChar.health = enemyChar.health - (numberAttacks * playerChar.attackPower);
-        numberAttacks ++;
-        console.log("numberAttacks: " + numberAttacks);
-        console.log("player health: " + playerChar.health);
-        console.log("enemy health: " + enemyChar.health);
-
+        if (attackMode === true) {
+            console.log("button clicked");
+            playerChar.health -= enemyChar.attackPower;
+            enemyChar.health -= (numberAttacks * playerChar.attackPower);
+            numberAttacks ++;
+            console.log("numberAttacks: " + numberAttacks);
+            console.log("player health: " + playerChar.health);
+            console.log("enemy health: " + enemyChar.health);
+            if (playerChar.health <= 0) {
+                console.log("Game over: You died");
+                attackMode = false;
+            }
+            if (enemyChar.health <= 0) {
+                attackMode = false;
+                console.log("Enemy defeated");
+                $("#rightSubCol1").html("");
+                selectEnemy();
+            }
+            console.log(attackMode);
+        } else {
+            console.log("select new enemy");
+        }
     });
 }
