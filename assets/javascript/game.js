@@ -22,54 +22,118 @@
 //    if (enemiesRemaining == 0)
 //        Player wins]
 
-var scavCharacter = {
-    health: 50,
-    attackPower: 4,
-    counterattackPower: 6,
+var health = {
+    scav: 50,
+    bear: 75,
+    usec: 75,
+    prapor: 100,
 };
 
-var bearCharacter = {
-    health: 50,
-    attackPower: 4,
-    counterattackPower: 6,
-};
-
-var usecCharacter = {
-    health: 50,
-    attackPower: 4,
-    counterattackPower: 6,
-};
-
-var praporCharacter = {
-    health: 50,
-    attackPower: 4,
-    counterattackPower: 6,
+var stats = {
+    scav: {
+        health: 50,
+        attackPower: 4,
+        counterattackPower: 6
+    },
+    bear: {
+        health: 55,
+        attackPower: 5,
+        counterattackPower: 3
+    },
+    usec: {
+        health: 70,
+        attackPower: 2,
+        counterattackPower: 8
+    },
+    prapor: {
+        health: 100,
+        attackPower: 9,
+        counterattackPower: 9
+    }
 };
 
 var characterChoice = "";
 
+var numberAttacks = 1;
+
+var playerChar = {
+    health: "",
+    attackPower: "",
+    counterattackPower: ""
+};
+
+var enemyChar = {
+    health: "",
+    attackPower: "",
+    counterattackPower: ""
+};
+
 var showCard = {
-    scav: '<div class="card" id="scav" style="width: 18rem;"><img class="card-img-top" src="assets/images/scav.png" alt="Scav image cap"><div class="card-body"><h5 class="card-title">Scav</h5><p class="card-text">Some quick placeholder text for the scav character.</p></div></div>',
-    bear: '<div class="card" id="bear" style="width: 18rem;"><img class="card-img-top" src="assets/images/bear.png" alt="Bear image cap"><div class="card-body"><h5 class="card-title">Bear</h5><p class="card-text">Some quick placeholder text for the bear character.</p></div></div>',
-    usec: '<div class="card" id="usec" style="width: 18rem;"><img class="card-img-top" src="assets/images/usec.png" alt="Usec image cap"><div class="card-body"><h5 class="card-title">Usec</h5><p class="card-text">Some quick placeholder text for the Usec character.</p></div></div>',
-    prapor: '<div class="card" id="prapor" style="width: 18rem;"><img class="card-img-top" src="assets/images/prapor.png" alt="Prapor image cap"><div class="card-body"><h5 class="card-title">Prapor</h5><p class="card-text">Some quick placeholder text for the Prapor character.</p></div></div>',
+    scav: '<div class="card" id="scav" style="width: 14rem;"><img class="card-img-top" src="assets/images/scav.png" alt="Scav image cap"><div class="card-body"><h5 class="card-title">Scav</h5></div></div>',
+    bear: '<div class="card" id="bear" style="width: 14rem;"><img class="card-img-top" src="assets/images/bear.png" alt="Bear image cap"><div class="card-body"><h5 class="card-title">Bear</h5></div></div>',
+    usec: '<div class="card" id="usec" style="width: 14rem;"><img class="card-img-top" src="assets/images/usec.png" alt="Usec image cap"><div class="card-body"><h5 class="card-title">Usec</h5></div></div>',
+    prapor: '<div class="card" id="prapor" style="width: 14rem;"><img class="card-img-top" src="assets/images/prapor.png" alt="Prapor image cap"><div class="card-body"><h5 class="card-title">Prapor</h5></div></div>',
 };
 
 var charactersRemain = ["scav", "bear", "usec", "prapor"];
 console.log(charactersRemain);
 
-$(".card").on("click", function() {
-    console.log("character clicked");
-    characterChoice = $(this).attr("id");
-    console.log(characterChoice);
-    charactersRemain.splice($.inArray(characterChoice, charactersRemain),1);
-    console.log(charactersRemain);
-    $("#leftSubCol1").html(showCard[characterChoice]);
-    $("#leftSubCol2").html("");
-    $("#rightSubCol1").html("");
-    $("#rightSubCol2").html("");
-    for (i = 0; i < charactersRemain.length; i++) {
-        $("#rightSubCol2").append(showCard[charactersRemain[i]]);
-    }
-});
+// Select character
+function selectCharacter() {
+    $(".card").on("click", function() {
+        characterChoice = $(this).attr("id");
+        console.log("character clicked");
+        console.log(stats[characterChoice]);
+        for(var k in stats.bear) {playerChar[k]=stats[characterChoice][k];}
+        console.log(playerChar);
 
+        // Remove chosen character from array of remaining
+        charactersRemain.splice($.inArray(characterChoice, charactersRemain),1);
+        console.log(charactersRemain);
+        // Move chosen character to left, others to right
+        $("#leftSubCol1").html(showCard[characterChoice]);
+        $("#leftSubCol2").html("");
+        $("#rightSubCol1").html("");
+        $("#rightSubCol2").html("");
+        for (i = 0; i < charactersRemain.length; i++) {
+            $("#rightSubCol2").append(showCard[charactersRemain[i]]);
+        }
+        selectEnemy();
+    });
+}
+selectCharacter();
+
+// Select active enemy
+function selectEnemy() {
+    $(".card").on("click", function() {
+        if ($(this).attr("id") != characterChoice) {
+            activeEnemy = $(this).attr("id");
+            console.log("enemy clicked");
+            console.log(stats[activeEnemy]);
+        for(var k in stats.bear) {enemyChar[k]=stats[activeEnemy][k];}
+        console.log(enemyChar);
+            charactersRemain.splice($.inArray(activeEnemy, charactersRemain),1);
+            console.log(charactersRemain);
+            // Move chosen character to left, others to right
+            $("#rightSubCol1").html(showCard[activeEnemy]);
+            $("#rightSubCol2").html("");
+            for (i = 0; i < charactersRemain.length; i++) {
+                $("#rightSubCol2").append(showCard[charactersRemain[i]]);
+            }
+        }
+        attack();
+    });
+}
+
+function attack() {
+    $("#attackButton").on("click", function() {
+        console.log("button clicked");
+        playerChar.health = playerChar.health - enemyChar.attackPower;
+        enemyChar.health = enemyChar.health - (numberAttacks * playerChar.attackPower);
+        numberAttacks ++;
+        console.log("numberAttacks: " + numberAttacks);
+        console.log("player health: " + playerChar.health);
+        console.log("enemy health: " + enemyChar.health);
+
+    });
+}
