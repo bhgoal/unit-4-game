@@ -106,7 +106,7 @@ function selectCharacter() {
         // Move chosen character to far left of screen, others to right
         $("#leftSubCol1").html(showCard[characterChoice]);
         $("#leftSubCol2").html("");
-        $("#rightSubCol1").html("");
+        $("#rightSubCol1").html('<h1 class="text-white text-center">Select enemy:</h1>');
         $("#rightSubCol2").html("");
         for (i = 0; i < charactersRemain.length; i++) {
             $("#rightSubCol2").append(showCard[charactersRemain[i]]);
