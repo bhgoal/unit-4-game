@@ -1,34 +1,34 @@
 // Define base stats for each of 4 characters.
 var stats = {
     scav: {
-        health: 50,
-        attackPower: 4, // If this character is chosen as player character, attack power = damage dealt by player to enemies.
-        counterattackPower: 6
+        health: 80,
+        attackPower: 16, // If this character is chosen as player character, attack power = damage dealt by player to enemies.
+        counterattackPower: 16
     },
     bear: {
-        health: 55,
-        attackPower: 5,
-        counterattackPower: 3 // If this character is an enemy, counterattack power = damage received by player when attacking this enemy
+        health: 100,
+        attackPower: 10,
+        counterattackPower: 10 // If this character is an enemy, counterattack power = damage received by player when attacking this enemy
     },
     usec: {
-        health: 70,
-        attackPower: 2,
-        counterattackPower: 8
+        health: 120,
+        attackPower: 8,
+        counterattackPower: 10
     },
     prapor: {
-        health: 100,
-        attackPower: 9,
-        counterattackPower: 9
+        health: 140,
+        attackPower: 6,
+        counterattackPower: 8
     }
 };
 
 // HTML to be inserted into various page elements, to move character cards around screen.
 // Contains span element for reactive health display when dealing/receiving damage.
 var showCard = {
-    scav: '<div class="card mx-auto" id="scav" style="width: 14rem;"><img class="card-img-top" src="assets/images/scav.png" alt="Scav image cap"><div class="card-body"><h5 class="card-title">Scav - <span id="scavHealth">50</span> HP</h5></div></div>',
-    bear: '<div class="card mx-auto" id="bear" style="width: 14rem;"><img class="card-img-top" src="assets/images/bear.png" alt="Bear image cap"><div class="card-body"><h5 class="card-title">Bear - <span id="bearHealth">55</span> HP</h5></div></div>',
-    usec: '<div class="card mx-auto" id="usec" style="width: 14rem;"><img class="card-img-top" src="assets/images/usec.png" alt="Usec image cap"><div class="card-body"><h5 class="card-title">Usec - <span id="UsecHealth">70</span> HP</h5></div></div>',
-    prapor: '<div class="card mx-auto" id="prapor" style="width: 14rem;"><img class="card-img-top" src="assets/images/prapor.png" alt="Prapor image cap"><div class="card-body"><h5 class="card-title">Prapor - <span id="praporHealth">100</span> HP</h5></div></div>',
+    scav: '<div class="card mx-auto" id="scav" style="width: 14rem;"><img class="card-img-top" src="assets/images/scav.png" alt="Scav image cap"><div class="card-body"><h5 class="card-title">Scav - <span id="scavHealth">80</span> HP</h5></div></div>',
+    bear: '<div class="card mx-auto" id="bear" style="width: 14rem;"><img class="card-img-top" src="assets/images/bear.png" alt="Bear image cap"><div class="card-body"><h5 class="card-title">BEAR - <span id="bearHealth">100</span> HP</h5></div></div>',
+    usec: '<div class="card mx-auto" id="usec" style="width: 14rem;"><img class="card-img-top" src="assets/images/usec.png" alt="Usec image cap"><div class="card-body"><h5 class="card-title">USEC - <span id="usecHealth">120</span> HP</h5></div></div>',
+    prapor: '<div class="card mx-auto" id="prapor" style="width: 14rem;"><img class="card-img-top" src="assets/images/prapor.png" alt="Prapor image cap"><div class="card-body"><h5 class="card-title">Prapor - <span id="praporHealth">140</span> HP</h5></div></div>',
     button: '<div class="text-center"><button type="button" id="attackButton" class="btn btn-danger btn-lg mt-5">Attack!</button></div>',
     gameOver:'<h1 class="text-white text-center">Game Over. You died!</h1>'
 };
