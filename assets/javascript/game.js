@@ -29,7 +29,8 @@ var showCard = {
     bear: '<div class="card mx-auto" id="bear" style="width: 14rem;"><img class="card-img-top" src="assets/images/bear.png" alt="Bear image cap"><div class="card-body"><h5 class="card-title">Bear - <span id="bearHealth">55</span> HP</h5></div></div>',
     usec: '<div class="card mx-auto" id="usec" style="width: 14rem;"><img class="card-img-top" src="assets/images/usec.png" alt="Usec image cap"><div class="card-body"><h5 class="card-title">Usec - <span id="UsecHealth">70</span> HP</h5></div></div>',
     prapor: '<div class="card mx-auto" id="prapor" style="width: 14rem;"><img class="card-img-top" src="assets/images/prapor.png" alt="Prapor image cap"><div class="card-body"><h5 class="card-title">Prapor - <span id="praporHealth">100</span> HP</h5></div></div>',
-    button: '<div class="text-center"><button type="button" id="attackButton" class="btn btn-danger btn-lg mt-5">Attack!</button></div>'
+    button: '<div class="text-center"><button type="button" id="attackButton" class="btn btn-danger btn-lg mt-5">Attack!</button></div>',
+    gameOver:'<h1 class="text-white text-center">Game Over. You died!</h1>'
 };
 
 // Name of player character choice
@@ -50,6 +51,14 @@ var enemyChar = {
 };
 // Array to track how many enemies left to defeat.
 var charactersRemain = ["scav", "bear", "usec", "prapor"];
+
+//function hover( ) {
+    //$(".card").hover(function(){
+    //    $(this).css({"border": "3px solid greenyellow", "box-sizing": "content-box"});
+    //    }, function(){
+    //   $(this).css("border", "0px");
+    //});
+//}
 
 // New game resets player/enemy character choices and stats
 function newGame() {
@@ -73,7 +82,6 @@ function newGame() {
 
     // Hide attack button
     $("#attackButton").css("visibility","hidden");
-
     selectCharacter();
 }
 newGame();
@@ -82,10 +90,12 @@ newGame();
 // Select character
 function selectCharacter() {
     console.log("Begin selectCharacter function");
-
     $(".card").on("click", function() {
         // Player clicks on a character card, choice is recorded as string into characterChoice
         characterChoice = $(this).attr("id");
+        // Clear intro message
+        $("#charMessage").css("display", "none");
+        $("#spacer").css("height", "18vh");
         // Stats of selected character copied into playerChar object
         for(var k in stats.bear) {playerChar[k]=stats[characterChoice][k];}
         console.log(playerChar);
@@ -124,7 +134,6 @@ function selectEnemy() {
             for (i = 0; i < charactersRemain.length; i++) {
                 $("#rightSubCol2").append(showCard[charactersRemain[i]]);
             }
-            attackMode = true;
             attack();
         }
     });
@@ -155,21 +164,22 @@ function attack() {
         if (playerChar.health <= 0) {
             console.log("Game over: You died");
             $("#attackButton").css("visibility","hidden");
+            $("#leftSubCol2").html(showCard.gameOver);
         }
 
         // When current enemy defeated
         if (enemyChar.health <= 0) {
             $("#attackButton").css("visibility","hidden");
-            $("#leftSubCol2").html("Enemy defeated!");
+            $("#leftSubCol2").html('<h1 class="text-white text-center">Enemy defeated!</h1>');
             console.log("Enemy defeated");
             // Clear enemy from fight area
             $("#rightSubCol1").html("");
             // Win condition if enemy was last one
             if (charactersRemain.length === 0) {
-                $("#leftSubCol2").html("You survived!");
+                $("#leftSubCol2").html('<h1 class="text-white text-center">You survived!</h1>');
                 console.log("You win!");
             } else { // Otherwise, return to enemy selection
-                $("#rightSubCol1").html("Select next enemy -->");
+                $("#rightSubCol1").html('<h1 class="text-white text-center">Select next enemy:</h1>');
                 selectEnemy();
             }
         }
